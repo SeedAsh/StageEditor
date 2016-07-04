@@ -25,7 +25,7 @@ bool MainScene::init()
 
 	auto winSize = CCDirector::sharedDirector()->getWinSize();
 	auto starsLayer = StarsLayer::create();
-	starsLayer->setPosition(ccp(winSize.width * 0.2f, winSize.height * 0.08f));
+	starsLayer->setPosition(ccp(winSize.width * 0.3f, winSize.height * 0.1f));
 	addChild(starsLayer);
 
 	auto uiLayer = UiLayer::create();

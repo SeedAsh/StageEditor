@@ -38,9 +38,9 @@ const char *intToStr(int value)
 	return str;
 }
 
-CCNode* getMask(const CCSize &size)
+CCNode* getMask(const CCSize &size, cocos2d::ccColor4B color)
 {
-	auto mask = CCLayerColor::create(ccc4(255, 0, 0, 145));
+	auto mask = CCLayerColor::create(color);
 	mask->setContentSize(size);
 	return mask;
 }

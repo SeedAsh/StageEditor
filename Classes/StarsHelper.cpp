@@ -119,37 +119,15 @@ void StarsHelper::getStagesData(std::vector<std::vector<StageStarInfo>> &stars, 
 	}
 }
 
-void StarsHelper::saveCurStageData()
+std::vector<std::string> StarsHelper::getStagesFileNames()
 {
-	/*
-	char str[100] = { 0 };
-	SqliteHelper helper(DB_STAGES);
-	string sql;
+	SqliteHelper sqlHelper(DB_STAGES);
 
-	helper.openTransaction(true);
-	for (int row = ROWS_SIZE - 1; row >= 0; --row)
+	auto data = sqlHelper.getDBInfo();
+	vector<string> tbNames;
+	for (auto iter = data.begin(); iter != data.end(); ++iter)
 	{
-		vector<string> stars;
-		sql.clear();
-		sql = "update save_stars values("; //只有一条记录 id=1
-		for (int col = 0; col < COlUMNS_SIZE; ++col)
-		{
-			LogicGrid grid(col, row);
-			int star = kEmpty;
-			auto node = stageModel->getStarNode(grid);
-			if (node)
-			{
-				star = node->getAttr().type;
-			}
-			sprintf(str, "%d,", star);
-			sql += str;
-		}
-		sql = sql.substr(0, sql.length() - 1); //去掉最后一个逗号
-		sql += ");";
-		helper.executeSql(sql.c_str());
+		tbNames.push_back(iter->first);
 	}
-	helper.openTransaction(false);
-	helper.closeDB();
-	*/
+	return tbNames;
 }
-

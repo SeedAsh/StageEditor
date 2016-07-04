@@ -29,8 +29,8 @@ public:
 	void loadStarsConfig();
 
 	void getStagesData(std::vector<std::vector<StageStarInfo>> &stars, const std::string &tableName);
-	void saveCurStageData();
 
+	std::vector<std::string> getStagesFileNames();
 private:
 private:
 	std::vector<StarsConfig> m_starsConfig;

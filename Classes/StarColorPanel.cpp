@@ -7,9 +7,9 @@ using namespace std;
 
 static int kStarsColorPanelTouchPrority = -130;
 
-StarColorNode *StarColorNode::create(int type)
+StarColorNode *StarColorNode::create(int type, int color)
 {
-	StarColorNode *node = new StarColorNode(type);
+	StarColorNode *node = new StarColorNode(type, color);
 	node->init();
 	node->autorelease();
 	return node;
@@ -17,7 +17,7 @@ StarColorNode *StarColorNode::create(int type)
 
 bool StarColorNode::init()
 {
-	auto spr = StarsHelper::theHelper()->getStarsSpr(kColorStar, m_color);
+	auto spr = StarsHelper::theHelper()->getStarsSpr(m_type, m_color);
 	auto size = spr->getContentSize();
 	addChild(spr);
 	setContentSize(size);
@@ -40,6 +40,14 @@ bool StarColorNode::onTouchBegan(cocos2d::CCPoint pt, bool isInside)
 }
 
 ////////////////////////////////////////////////////////////
+StarColorPanel *StarColorPanel::create(int type)
+{
+	StarColorPanel *node = new StarColorPanel(type);
+	node->init();
+	node->autorelease();
+	return node;
+}
+
 void StarColorPanel::onEnter()
 {
 	CCNode::onEnter();
@@ -63,7 +71,7 @@ bool StarColorPanel::init()
 	static const float kSpacing = 10;
 	for (int color = kColorRandom; color <= kColorPurple; ++color)
 	{
-		auto node = StarColorNode::create(color);
+		auto node = StarColorNode::create(m_type, color);
 		auto size = node->getContentSize();
 		addChild(node);
 		node->setPosition(curSize.width, 0);
@@ -73,6 +81,18 @@ bool StarColorPanel::init()
 
 	setContentSize(curSize);
 	return true;
+}
+
+void StarColorPanel::showMask()
+{
+	auto winSize = CCDirector::sharedDirector()->getWinSize();
+	auto size = getContentSize();
+	auto mask = getMask(winSize, ccc4(0, 0, 0, 165));
+	CCPoint pos;
+	pos.x = size.width - getPositionX();
+	pos.y = size.height * 0.5f - getPositionY();
+	mask->setPosition(pos);
+	addChild(mask, -1);
 }
 
 void StarColorPanel::finishColorSelect(int color)

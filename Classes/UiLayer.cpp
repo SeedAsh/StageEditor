@@ -5,23 +5,35 @@
 #include "StarColorPanel.h"
 #include "EditorModel.h"
 #include "ListSlideView.h"
+#include "FileListNode.h"
 USING_NS_CC;
 using namespace std;
 
 bool UiLayer::init()
 {
 	initPanel();
+	initBtns();
+	initList();
 	return true;
 }
 
 void UiLayer::initPanel()
 {
 	auto winSize = CCDirector::sharedDirector()->getWinSize();
+	m_title = CCLabelTTF::create("Table Name", "Arial", 40);
+	addChild(m_title);
+	m_title->setPosition(ccp(winSize.width * 0.5f, winSize.height * 0.95f));
+	setContentSize(winSize);
+}
+
+void UiLayer::initBtns()
+{
+	auto winSize = CCDirector::sharedDirector()->getWinSize();
 	setContentSize(winSize);
 
 	CCMenu* pMenu = CCMenu::create();
 	pMenu->setPosition(ccp(0, 0));
-	this->addChild(pMenu, 1);
+	this->addChild(pMenu);
 
 	float xPos = winSize.width * 0.93f;
 	float yPos = winSize.height * 0.93f;
@@ -39,26 +51,50 @@ void UiLayer::initPanel()
 	}
 	auto openBtn = getBtnWithLabel("open");
 	openBtn->setTarget(this, menu_selector(UiLayer::onOpenBtnClicked));
-	openBtn->setPosition(ccp(winSize.width * 0.8f, winSize.height * 0.93f));
+	openBtn->setPosition(ccp(winSize.width * 0.1f, winSize.height * 0.93f));
 	pMenu->addChild(openBtn);
 
 	auto saveBtn = getBtnWithLabel("save");
 	saveBtn->setTarget(this, menu_selector(UiLayer::onSaveBtnClicked));
-	saveBtn->setPosition(ccp(winSize.width * 0.8f, winSize.height * 0.83f));
+	saveBtn->setPosition(ccp(winSize.width * 0.1f, winSize.height * 0.83f));
 	pMenu->addChild(saveBtn);
+}
 
+void UiLayer::initList()
+{
+	CCSize listSize = CCSize(200, 450);
+	auto winSize = CCDirector::sharedDirector()->getWinSize();
+	CCPoint pos = ccp(winSize.width * 0.01f, winSize.height * 0.7f);
 
-	ListSlideView *listView = ListSlideView::create(CCSize(70, 300));
-	listView->setSpacing(10);
-	for (int i = 0; i < 10; ++i)
+	CCSprite *pad = CCSprite::create("ui/pad.png");
+	CCSize sprSize = pad->getContentSize();
+	pad->setScaleX(listSize.width / sprSize.width);
+	pad->setScaleY(listSize.height / sprSize.height);
+	pad->setAnchorPoint(ccp(0, 1));
+	pad->setPosition(pos);
+	addChild(pad);
+
+	m_listView = ListSlideView::create(listSize);
+	m_listView->setTouchHanedle([=](int index)
 	{
-		//auto mask = getMask(CCSize(60, 20));
-		auto mask = CCSprite::create("stars/yxjm_fangkuai5.png");
-		listView->addNode(mask);
+		for (int i = 0; i < m_listView->count(); ++i)
+		{
+			auto listNode = dynamic_cast<FileListNode *>(m_listView->getNode(i));
+			listNode->setBkVisible(false);
+		}
+		auto listNode = dynamic_cast<FileListNode *>(m_listView->getNode(index));
+		listNode->setBkVisible(true);
+	});
+	m_listView->setSpacing(3);
+	auto tbNames = StarsHelper::theHelper()->getStagesFileNames();
+	for (int i = 0; i < tbNames.size(); ++i)
+	{
+		FileListNode *node = FileListNode::create(tbNames[i].c_str());
+		m_listView->addNode(node);
 	}
-	addChild(listView);
-	listView->setAnchorPoint(ccp(0, 1));
-	listView->setPositionY(winSize.height * 0.9f);
+	addChild(m_listView);
+	m_listView->setAnchorPoint(ccp(0, 1));
+	m_listView->setPosition(pos);
 }
 
 void UiLayer::onStarTypeBtnClicked(cocos2d::CCObject* pSender)
@@ -68,7 +104,7 @@ void UiLayer::onStarTypeBtnClicked(cocos2d::CCObject* pSender)
 	auto config = StarsHelper::theHelper()->getStarConfig(type);
 	if (config.hasColor)
 	{
-		auto panel = StarColorPanel::create();
+		auto panel = StarColorPanel::create(type);
 		panel->setHandle([=](int color)
 		{
 			EditorModel::theModel()->setCurStar(type, color);
@@ -78,6 +114,7 @@ void UiLayer::onStarTypeBtnClicked(cocos2d::CCObject* pSender)
 		auto pos = node->getPosition();
 		auto size = node->getContentSize();
 		panel->setPosition(ccp(pos.x - size.width * 0.5f, pos.y));
+		panel->showMask();
 	}
 	else
 	{
@@ -87,7 +124,14 @@ void UiLayer::onStarTypeBtnClicked(cocos2d::CCObject* pSender)
 
 void UiLayer::onOpenBtnClicked(cocos2d::CCObject* pSender)
 {
-	EditorModel::theModel()->openNewStage("stage1_stars");
+	int curIndex = m_listView->getCurNodeIndex();
+	auto listNode = dynamic_cast<FileListNode *>(m_listView->getNode(curIndex));
+	if (listNode)
+	{
+		auto tbName = listNode->getFileName();
+		EditorModel::theModel()->openNewStage(tbName);
+		m_title->setString(tbName.c_str());
+	}
 }
 
 void UiLayer::onSaveBtnClicked(cocos2d::CCObject* pSender)
