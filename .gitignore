@@ -4,10 +4,10 @@ proj.mac
 proj.marmalade
 proj.tizen
 proj.win32/*
-!UiEditor.vcxproj
-!UiEditor.vcxproj.filters
-!UiEditor.vcxproj.user
-!UiEditor.sln
+!StageEditor.vcxproj
+!StageEditor.vcxproj.filters
+!StageEditor.vcxproj.user
+!StageEditor.sln
 !proj.win32/main.cpp
 !proj.win32/main.h
 proj.winrt
