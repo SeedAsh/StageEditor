@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
+#include "MainScene.h"
+#include "EditorModel.h"
 
 USING_NS_CC;
 
@@ -16,16 +17,17 @@ bool AppDelegate::applicationDidFinishLaunching() {
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
 
+	pEGLView->setFrameSize(1000, 700);
     pDirector->setOpenGLView(pEGLView);
-	
+
     // turn on display FPS
-    pDirector->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-    CCScene *pScene = HelloWorld::scene();
+	EditorModel::theModel()->init();
+    CCScene *pScene = MainScene::scene();
 
     // run
     pDirector->runWithScene(pScene);

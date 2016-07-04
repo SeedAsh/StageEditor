@@ -132,12 +132,41 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
+    <ClCompile Include="..\Classes\EditorModel.cpp" />
+    <ClCompile Include="..\Classes\ListSlideView.cpp" />
+    <ClCompile Include="..\Classes\ListView.cpp" />
+    <ClCompile Include="..\Classes\MainScene.cpp" />
+    <ClCompile Include="..\Classes\sqlite3.c" />
+    <ClCompile Include="..\Classes\SqliteHelper.cpp" />
+    <ClCompile Include="..\Classes\StarColorPanel.cpp" />
+    <ClCompile Include="..\Classes\StarsHelper.cpp" />
+    <ClCompile Include="..\Classes\StarsLayer.cpp" />
+    <ClCompile Include="..\Classes\StarNode.cpp" />
+    <ClCompile Include="..\Classes\TouchNode.cpp" />
+    <ClCompile Include="..\Classes\UiLayer.cpp" />
+    <ClCompile Include="..\Classes\Util.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
-    <ClInclude Include="..\Classes\HelloWorldScene.h" />
+    <ClInclude Include="..\Classes\CommonMacro.h" />
+    <ClInclude Include="..\Classes\EditorModel.h" />
+    <ClInclude Include="..\Classes\ListSlideView.h" />
+    <ClInclude Include="..\Classes\ListView.h" />
+    <ClInclude Include="..\Classes\MainScene.h" />
+    <ClInclude Include="..\Classes\rapidxml\rapidxml.hpp" />
+    <ClInclude Include="..\Classes\rapidxml\rapidxml_iterators.hpp" />
+    <ClInclude Include="..\Classes\rapidxml\rapidxml_print.hpp" />
+    <ClInclude Include="..\Classes\rapidxml\rapidxml_utils.hpp" />
+    <ClInclude Include="..\Classes\sqlite3.h" />
+    <ClInclude Include="..\Classes\SqliteHelper.h" />
+    <ClInclude Include="..\Classes\StarColorPanel.h" />
+    <ClInclude Include="..\Classes\StarsHelper.h" />
+    <ClInclude Include="..\Classes\StarsLayer.h" />
+    <ClInclude Include="..\Classes\StarNode.h" />
+    <ClInclude Include="..\Classes\TouchNode.h" />
+    <ClInclude Include="..\Classes\UiLayer.h" />
+    <ClInclude Include="..\Classes\Util.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
