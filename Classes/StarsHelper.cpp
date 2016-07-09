@@ -35,7 +35,7 @@ void StarsHelper::loadStarsConfig()
 
 StarsConfig StarsHelper::getStarConfig(int type)
 {
-	assert(type >= kEmpty && type <= kKey);
+	assert(type >= kEmpty && type < kStarTypeCount);
 	return m_starsConfig[type];
 }
 

@@ -19,7 +19,7 @@ private:
 	void onSaveBtnClicked(cocos2d::CCObject* pSender);
 private:
 	cocos2d::CCLabelTTF *m_title;
-	int m_menuItemData[10];
+	int m_menuItemData[11];
 	ListSlideView *m_listView;
 };
 #endif

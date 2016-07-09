@@ -12,11 +12,12 @@ enum StarType
 	kBounceBall,
 	kDeadVine,
 	kLiveVine,
-	kStone,
+	kStump,
 	kBomb,
 	kIron,
 	kDiamond,
 	kKey,
+	kStone,
 
 	kStarTypeCount,
 };

@@ -38,8 +38,8 @@ void UiLayer::initBtns()
 	float xPos = winSize.width * 0.93f;
 	float yPos = winSize.height * 0.93f;
 	CCMenuItemSprite *iter = NULL;
-	string typeName[10] = { "Empty", "Star", "BounceBall", "DeadVine", "LiveVine", "Stone", "Bomb", "Iron", "Diamond", "Key" };
-	for (int i = 0; i < 10; ++i)
+	string typeName[11] = { "Empty", "Star", "BounceBall", "DeadVine", "LiveVine", "Stump", "Bomb", "Iron", "Diamond", "Key", "Stone" };
+	for (int i = 0; i < 11; ++i)
 	{
 		m_menuItemData[i] = i;
 		auto item = getBtnWithLabel(typeName[i].c_str());
@@ -47,7 +47,7 @@ void UiLayer::initBtns()
 		item->setPosition(xPos, yPos);
 		item->setUserData(&m_menuItemData[i]);
 		pMenu->addChild(item);
-		yPos -= winSize.height * 0.1f;
+		yPos -= 55;
 	}
 	auto openBtn = getBtnWithLabel("open");
 	openBtn->setTarget(this, menu_selector(UiLayer::onOpenBtnClicked));
